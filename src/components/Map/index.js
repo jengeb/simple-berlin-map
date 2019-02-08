@@ -10,6 +10,7 @@ import Search from '@shared/components/Search'
 import MapLocationMarker from '@shared/components/MapLocationMarker'
 import { featureToLatLng } from '@shared/lib/geoJsonCompat'
 import berlinMask from '@data/berlin.geo.json'
+import planungsRaeume from '@data/planungsraeume.geo.json'
 import colors from '@shared/styles/colors.sass'
 import _ from './styles.sass'
 
@@ -96,7 +97,7 @@ export default class Map extends Component {
       // this is false because ios jumps towards elemts that can have focus when you touch
       // them which makes the page jump
       keyboard: false,
-      minZoom: 9,
+      minZoom: 10,
       maxZoom: 16,
       zoomControl: false,
       scrollWheelZoom: false,
@@ -124,6 +125,13 @@ export default class Map extends Component {
       fillOpacity: 0.8,
       color: 'white',
       stroke: false
+    }
+
+    const raeumeProps = {
+      interactive: false,
+      fillOpacity: 0,
+      color: 'black',
+      weight: 0.4
     }
 
     const polygonProps = selectedMarker ? {
@@ -154,6 +162,7 @@ export default class Map extends Component {
       <LeafletMap className={_.map} {...mapProps} ref={(map) => { this.map = map.leafletElement }}>
         <BingLayer type='CanvasGray' bingkey={BING_KEY} culture='de-de' style='trs|lv:false;fc:EAEAEA_pp|lv:false;v:false_ar|v:false;lv:false_vg|v:true;fc:E4E4E4_wt|fc:AED1E4_rd|sc:d0d0d0;fc:e9e9e9_mr|sc:d3d3d3;fc:dddddd_hg|sc:d3d3d3;fc:e9e9e9_g|lc:EAEAEA' />
         <GeoJSON data={berlinMask} {...maskProps} />
+        <GeoJSON data={planungsRaeume} {...raeumeProps} />
         <ZoomControl position='bottomright' />
 
         <Markers {...markersProps} />
