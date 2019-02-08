@@ -8,7 +8,9 @@ export default class Detail extends Component {
 
     return <div class={_.content}>
       <h2 class={_.title}>{feature.properties.title}</h2>
-      <p class={_.description}>{feature.properties.description}</p>
+      <p class={_.description}>
+        {feature.properties.adr_plz_ort}-{feature.properties.stadtteil}
+      </p>
     </div>
   }
 
