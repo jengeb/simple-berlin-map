@@ -98,7 +98,7 @@ export default class Map extends Component {
       // them which makes the page jump
       keyboard: false,
       minZoom: 10,
-      maxZoom: 16,
+      maxZoom: 18,
       zoomControl: false,
       scrollWheelZoom: false,
       dragging: false,
@@ -129,9 +129,63 @@ export default class Map extends Component {
 
     const raeumeProps = {
       interactive: false,
-      fillOpacity: 0,
-      color: 'black',
-      weight: 0.4
+      color: 'grey',
+      weight: 0.4,
+      style: function (feature) {
+        let value = parseInt(feature.properties.einfache_wohnlage_proz)
+        const threshold = 100 / 7
+        const thresholdOpacity = 100 / 8 // to avoid having black non opaque areas
+        switch (true) {
+          // 0
+          case (value === 0): 
+            return {
+              fillColor: 'white',
+              fillOpacity: 0.6
+            }
+          // 1
+          case (value <= threshold): 
+            return {
+              fillColor: 'black',
+              fillOpacity: thresholdOpacity / 100
+            }
+          // 2
+          case (value > threshold && value <= threshold * 2): 
+            return {
+              fillColor: 'black',
+              fillOpacity: thresholdOpacity * 2 / 100
+            }
+          // 3
+          case (value > threshold * 2 && value <= threshold * 3): 
+            return {
+              fillColor: 'black',
+              fillOpacity: thresholdOpacity * 3 / 100
+            }
+          // 4
+          case (value > threshold * 3 && value <= threshold * 4): 
+            return {
+              fillColor: 'black',
+              fillOpacity: thresholdOpacity * 4 / 100
+            }
+          // 5
+          case (value > threshold * 4 && value <= threshold * 5): 
+            return {
+              fillColor: 'black',
+              fillOpacity: thresholdOpacity * 5 / 100
+            }
+          // 6
+          case (value > threshold * 5 && value <= threshold * 6): 
+            return {
+              fillColor: 'black',
+              fillOpacity: thresholdOpacity * 6 / 100
+            }
+          // 7 
+          default: 
+            return {
+              fillColor: 'black',
+              fillOpacity: thresholdOpacity * 7 / 100
+            }
+        }
+      }
     }
 
     const polygonProps = selectedMarker ? {
@@ -161,7 +215,7 @@ export default class Map extends Component {
 
       <LeafletMap className={_.map} {...mapProps} ref={(map) => { this.map = map.leafletElement }}>
         <BingLayer type='CanvasGray' bingkey={BING_KEY} culture='de-de' style='trs|lv:false;fc:EAEAEA_pp|lv:false;v:false_ar|v:false;lv:false_vg|v:true;fc:E4E4E4_wt|fc:AED1E4_rd|sc:d0d0d0;fc:e9e9e9_mr|sc:d3d3d3;fc:dddddd_hg|sc:d3d3d3;fc:e9e9e9_g|lc:EAEAEA' />
-        <GeoJSON data={berlinMask} {...maskProps} />
+
         <GeoJSON data={planungsRaeume} {...raeumeProps} />
         <ZoomControl position='bottomright' />
 
