@@ -215,20 +215,19 @@ export default class Map extends Component {
       <LeafletMap className={_.map} {...mapProps} ref={(map) => { this.map = map.leafletElement }}>
         <BingLayer type='CanvasGray' bingkey={BING_KEY} culture='de-de' style='trs|lv:false;fc:EAEAEA_pp|lv:false;v:false_ar|v:false;lv:false_vg|v:true;fc:E4E4E4_wt|fc:AED1E4_rd|sc:d0d0d0;fc:e9e9e9_mr|sc:d3d3d3;fc:dddddd_hg|sc:d3d3d3;fc:e9e9e9_g|lc:EAEAEA' />
 
-        {/* <GeoJSON onEachFeature={onEachFeature} data={planungsRaeume} {...raeumeProps} /> */}
-
         <FeatureGroup>
           {planungsRaeume.features.map((plaungsRaum, i) => 
             <div>
-              <Tooltip key={i} sticky={true}>
-                <div>
-                  <p>Kiez: </p>
-                  <p>Bezirk: </p>
-                  <p>Einwohner (2016): {plaungsRaum.properties.einwohner_2016}</p>  
-                  <p>Davon in einfacher Wohnlage (%): </p>  
-                </div>
-              </Tooltip>
-              <GeoJSON data={plaungsRaum} {...raeumeProps} />
+              <GeoJSON data={plaungsRaum} {...raeumeProps}>
+                <Tooltip sticky={true} interactive={false}>
+                  <div>
+                    <p>Kiez: {plaungsRaum.properties.lor_name}</p>
+                    <p>Bezirk: {plaungsRaum.properties.bezirk}</p>
+                    <p>Einwohner (2016): {plaungsRaum.properties.einwohner_2016}</p>  
+                    <p>Davon in einfacher Wohnlage (%): {plaungsRaum.properties.einfache_wohnlage_proz}</p>  
+                  </div>
+                </Tooltip>
+              </GeoJSON>
             </div>
           )}
         </FeatureGroup>
