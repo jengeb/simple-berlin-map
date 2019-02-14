@@ -104,7 +104,7 @@ export default class Map extends Component {
       zoom: 11,
       zoomControl: false,
       scrollWheelZoom: false,
-      // dragging: false,
+      dragging: false, // for mobile use
       onZoom: this.handleZoom,
       zoomSnap: false,
       // bounds: [
