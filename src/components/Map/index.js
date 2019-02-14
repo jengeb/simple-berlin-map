@@ -221,10 +221,11 @@ export default class Map extends Component {
               <GeoJSON data={plaungsRaum} {...raeumeProps}>
                 <Tooltip sticky={true} interactive={false}>
                   <div>
-                    <p>Kiez: {plaungsRaum.properties.lor_name}</p>
-                    <p>Bezirk: {plaungsRaum.properties.bezirk}</p>
-                    <p>Einwohner (2016): {plaungsRaum.properties.einwohner_2016}</p>  
-                    <p>Davon in einfacher Wohnlage (%): {plaungsRaum.properties.einfache_wohnlage_proz}</p>  
+                    <div>Kiez<br></br><b>{plaungsRaum.properties.lor_name}</b></div>
+                    <p>Bezirk<br></br><b>{plaungsRaum.properties.bezirk}</b></p>
+                    <p>Einwohner (2016)<br></br><b>{plaungsRaum.properties.einwohner_2016}</b></p>  
+                    <p>Davon in einfacher<br></br> Wohnlage (%)<br></br><b>{plaungsRaum.properties.einfache_wohnlage_proz}</b></p>
+                    <div>Davon in guter<br></br>Wohnlage (%)<br></br><b>{plaungsRaum.properties.gute_wohnlage_proz}</b></div>
                   </div>
                 </Tooltip>
               </GeoJSON>
