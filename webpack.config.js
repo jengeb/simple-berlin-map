@@ -27,7 +27,7 @@ const createIndexHTML = new HtmlWebpackPlugin({
   mobile: true,
   chunks: ['index'],
   filename: 'index.html',
-  title: 'Weiterführende Schulen in Berlin'
+  title: 'Karte Aspire'
 })
 
 const createIframeHTML = new HtmlWebpackPlugin({
