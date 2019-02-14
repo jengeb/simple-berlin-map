@@ -104,7 +104,7 @@ export default class Map extends Component {
       zoom: 11,
       zoomControl: false,
       scrollWheelZoom: false,
-      dragging: false, // for mobile use
+      dragging: false,
       onZoom: this.handleZoom,
       zoomSnap: false,
       // bounds: [
@@ -117,21 +117,15 @@ export default class Map extends Component {
       ]
     }
 
-    const searchProps = {
-      layers: ['address'],
-      isOnSmallScreen: isOnSmallScreen,
-      onSelect: result => this.handleSearch(result)
-    }
-
     const maskProps = {
+      stroke: false,
       interactive: false,
-      fillOpacity: 0.8,
-      color: 'white',
-      stroke: false
+      fillOpacity: 0.85,
+      fillColor: 'white'
     }
 
     const raeumeProps = {
-      color: 'grey',
+      color: 'dimgrey',
       weight: 0.4,
       style: (feature) => {
         let value = parseInt(feature.properties.einfache_wohnlage_proz)
@@ -216,28 +210,28 @@ export default class Map extends Component {
       {/* <Search class={_.addressSearch} {...searchProps} /> */}
       <LeafletMap className={_.map} {...mapProps} ref={(map) => { this.map = map.leafletElement }}>
         <BingLayer type='CanvasGray' bingkey={BING_KEY} culture='de-de' style='trs|lv:false;fc:EAEAEA_pp|lv:false;v:false_ar|v:false;lv:false_vg|v:true;fc:E4E4E4_wt|fc:AED1E4_rd|sc:d0d0d0;fc:e9e9e9_mr|sc:d3d3d3;fc:dddddd_hg|sc:d3d3d3;fc:e9e9e9_g|lc:EAEAEA' />
-
+        <GeoJSON data={berlinMask} {...maskProps} />
         <FeatureGroup>
           {planungsRaeume.features.map((plaungsRaum, i) => 
             <div>
               <GeoJSON data={plaungsRaum} {...raeumeProps}>
                 <Tooltip sticky={true} interactive={false}>
                   <div>
-                    {plaungsRaum.properties.lor_name ? (
-                      <div>Kiez<br></br><b>{plaungsRaum.properties.lor_name}</b></div>
-                    ) : (<span></span>)}
-                    {plaungsRaum.properties.bezirk ? (
-                      <p>Bezirk<br></br><b>{plaungsRaum.properties.bezirk}</b></p>
-                    ) : (<span></span>)}
-                    {plaungsRaum.properties.einwohner_2016 !== null ? (
-                      <p>Einwohner (2016)<br></br><b>{plaungsRaum.properties.einwohner_2016}</b></p>
-                    ) : (<span></span>)}
-                    {plaungsRaum.properties.einfache_wohnlage_proz !== null ? (
-                      <p>Davon in einfacher<br></br> Wohnlage (%)<br></br><b>{plaungsRaum.properties.einfache_wohnlage_proz}</b></p>
-                    ) : (<span></span>)}
-                    {plaungsRaum.properties.gute_wohnlage_proz !== null ? (
-                      <div>Davon in guter<br></br> Wohnlage (%)<br></br><b>{plaungsRaum.properties.gute_wohnlage_proz}</b></div>
-                    ) : (<span></span>)}
+                    { plaungsRaum.properties.lor_name ? (
+                      <div class={_.tooltipContent}>Kiez<br></br><b>{plaungsRaum.properties.lor_name}</b></div>
+                    ) : null }
+                    { plaungsRaum.properties.bezirk ? (
+                      <div class={_.tooltipContent}>Bezirk<br></br><b>{plaungsRaum.properties.bezirk}</b></div>
+                    ) : null }
+                    { plaungsRaum.properties.einwohner_2016 !== null ? (
+                      <div class={_.tooltipContent}>Einwohner (2016)<br></br><b>{plaungsRaum.properties.einwohner_2016}</b></div>
+                    ) : null }
+                    { plaungsRaum.properties.einfache_wohnlage_proz !== null ? (
+                      <div class={_.tooltipContent}>Davon in einfacher<br></br> Wohnlage (%)<br></br><b>{plaungsRaum.properties.einfache_wohnlage_proz}</b></div>
+                    ) : null }
+                    { plaungsRaum.properties.gute_wohnlage_proz !== null ? (
+                      <div class={_.tooltipContent}>Davon in guter<br></br> Wohnlage (%)<br></br><b>{plaungsRaum.properties.gute_wohnlage_proz}</b></div>
+                    ) : null }
                   </div>
                 </Tooltip>
               </GeoJSON>
