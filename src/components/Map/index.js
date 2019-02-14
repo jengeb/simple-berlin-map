@@ -87,6 +87,8 @@ export default class Map extends Component {
         bottomright: { lat: 52.32, lng: 13.79 }
       },
       maxBounds: {
+        // topleft: { lat: 52.8, lng: 13.15 },
+        // bottomright: { lat: 52.2, lng: 14.1 }
         topleft: { lat: 52.8, lng: 12.9 },
         bottomright: { lat: 52.2, lng: 13.9 }
       }
@@ -97,17 +99,18 @@ export default class Map extends Component {
       // this is false because ios jumps towards elemts that can have focus when you touch
       // them which makes the page jump
       keyboard: false,
-      minZoom: 10,
+      minZoom: 9,
       maxZoom: 18,
+      zoom: 11,
       zoomControl: false,
       scrollWheelZoom: false,
-      dragging: false,
+      // dragging: false,
       onZoom: this.handleZoom,
       zoomSnap: false,
-      bounds: [
-        [berlin.bounds.bottomright.lat, berlin.bounds.bottomright.lng],
-        [berlin.bounds.topleft.lat, berlin.bounds.topleft.lng]
-      ],
+      // bounds: [
+      //   [berlin.bounds.bottomright.lat, berlin.bounds.bottomright.lng],
+      //   [berlin.bounds.topleft.lat, berlin.bounds.topleft.lng]
+      // ],
       maxBounds: [
         [berlin.maxBounds.bottomright.lat, berlin.maxBounds.bottomright.lng],
         [berlin.maxBounds.topleft.lat, berlin.maxBounds.topleft.lng]
@@ -210,8 +213,7 @@ export default class Map extends Component {
     }
 
     return (<div class={props.class}>
-      <Search class={_.addressSearch} {...searchProps} />
-
+      {/* <Search class={_.addressSearch} {...searchProps} /> */}
       <LeafletMap className={_.map} {...mapProps} ref={(map) => { this.map = map.leafletElement }}>
         <BingLayer type='CanvasGray' bingkey={BING_KEY} culture='de-de' style='trs|lv:false;fc:EAEAEA_pp|lv:false;v:false_ar|v:false;lv:false_vg|v:true;fc:E4E4E4_wt|fc:AED1E4_rd|sc:d0d0d0;fc:e9e9e9_mr|sc:d3d3d3;fc:dddddd_hg|sc:d3d3d3;fc:e9e9e9_g|lc:EAEAEA' />
 
@@ -221,18 +223,27 @@ export default class Map extends Component {
               <GeoJSON data={plaungsRaum} {...raeumeProps}>
                 <Tooltip sticky={true} interactive={false}>
                   <div>
-                    <div>Kiez<br></br><b>{plaungsRaum.properties.lor_name}</b></div>
-                    <p>Bezirk<br></br><b>{plaungsRaum.properties.bezirk}</b></p>
-                    <p>Einwohner (2016)<br></br><b>{plaungsRaum.properties.einwohner_2016}</b></p>  
-                    <p>Davon in einfacher<br></br> Wohnlage (%)<br></br><b>{plaungsRaum.properties.einfache_wohnlage_proz}</b></p>
-                    <div>Davon in guter<br></br>Wohnlage (%)<br></br><b>{plaungsRaum.properties.gute_wohnlage_proz}</b></div>
+                    {plaungsRaum.properties.lor_name ? (
+                      <div>Kiez<br></br><b>{plaungsRaum.properties.lor_name}</b></div>
+                    ) : (<span></span>)}
+                    {plaungsRaum.properties.bezirk ? (
+                      <p>Bezirk<br></br><b>{plaungsRaum.properties.bezirk}</b></p>
+                    ) : (<span></span>)}
+                    {plaungsRaum.properties.einwohner_2016 !== null ? (
+                      <p>Einwohner (2016)<br></br><b>{plaungsRaum.properties.einwohner_2016}</b></p>
+                    ) : (<span></span>)}
+                    {plaungsRaum.properties.einfache_wohnlage_proz !== null ? (
+                      <p>Davon in einfacher<br></br> Wohnlage (%)<br></br><b>{plaungsRaum.properties.einfache_wohnlage_proz}</b></p>
+                    ) : (<span></span>)}
+                    {plaungsRaum.properties.gute_wohnlage_proz !== null ? (
+                      <div>Davon in guter<br></br> Wohnlage (%)<br></br><b>{plaungsRaum.properties.gute_wohnlage_proz}</b></div>
+                    ) : (<span></span>)}
                   </div>
                 </Tooltip>
               </GeoJSON>
             </div>
           )}
         </FeatureGroup>
-
 
         <ZoomControl position='bottomright' />
 
