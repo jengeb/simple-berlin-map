@@ -208,16 +208,17 @@ export default class Map extends Component {
     }
 
     const legendProps = {
-      grades: [0, 10, 20, 50, 100],
-      labels: ['wenig', 'mehr', 'mittel', 'viel', 'viel mehr'],
-      colors: ['green', 'red', 'blue', 'black', 'yellow'],
+      grades: [0, 14, 28, 42, 57, 71, 85, 100],
+      labels: [],
+      colors: ['rgba(255, 255, 255, 0.6)', 'rgba(0, 0, 0, 0.15)', 'rgba(0, 0, 0, 0.30)', 'rgba(0, 0, 0, 0.45)', 'rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.75)', 'rgba(0, 0, 0, 1)'],
       position: 'bottomleft',
-      title: 'Einfache Wohnlage in %'
+      title: 'Einfache Wohnlage',
+      unit: 'in %'
     }
 
     return (<div class={props.class}>
       {/* <Search class={_.addressSearch} {...searchProps} /> */}
-      {/* <LegendControl class={_.legend} {...legendProps} /> */}
+      <LegendControl class={_.legend} {...legendProps} />
       <LeafletMap className={_.map} {...mapProps} ref={(map) => { this.map = map.leafletElement }}>
         <BingLayer type='CanvasGray' bingkey={BING_KEY} culture='de-de' style='trs|lv:false;fc:EAEAEA_pp|lv:false;v:false_ar|v:false;lv:false_vg|v:true;fc:E4E4E4_wt|fc:AED1E4_rd|sc:d0d0d0;fc:e9e9e9_mr|sc:d3d3d3;fc:dddddd_hg|sc:d3d3d3;fc:e9e9e9_g|lc:EAEAEA' />
         <GeoJSON data={berlinMask} {...maskProps} />
