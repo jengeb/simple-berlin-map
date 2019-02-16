@@ -1,6 +1,3 @@
-import ReactDOM from 'react-dom'
-import L from 'leaflet'
-import { MapControl } from 'react-leaflet'
 import { h, Component } from 'preact'
 import _ from './styles.sass'
 
@@ -19,6 +16,7 @@ export default class LegendControl extends Component {
       colors,
       position,
       title,
+      unit,
       ...rest
     } = this.props
 
@@ -28,10 +26,12 @@ export default class LegendControl extends Component {
             {title}
         </div>
         {grades.map((grade, i) =>
+          i < grades.length - 1 ?  
           <div style='padding-bottom:5px;'>
-            <i style={{ backgroundColor: colors[i]}}></i> {grade} {labels[i]}
+            <i style={{ backgroundColor: colors[i]}}></i> {grades[i]}-{grades[i+1]} %
           </div>
-        )} 
+          : null
+        )}
       </div>
     </div>
   }
