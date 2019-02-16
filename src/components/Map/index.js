@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css'
 import { Map as LeafletMap, ZoomControl, GeoJSON, Pane, FeatureGroup, Tooltip } from 'react-leaflet'
 import { BingLayer } from 'react-leaflet-bing'
 
+import LegendControl from '@components/LegendControl'
 import Markers from '@components/Markers'
 import MapPolygonWithAbsolutePoints from '@shared/components/MapPolygonWithAbsolutePoints'
 import Search from '@shared/components/Search'
@@ -128,57 +129,57 @@ export default class Map extends Component {
       color: 'dimgrey',
       weight: 0.4,
       style: (feature) => {
-        let value = parseInt(feature.properties.einfache_wohnlage_proz)
+        let value = parseFloat(feature.properties.einfache_wohnlage_proz)
         const threshold = 100 / 7
-        const thresholdOpacity = 100 / 8 // to avoid having black non opaque areas
+        const thresholdOpacity = 100 / 8
         switch (true) {
           // 0
-          case (value === 0): 
+          case (value === 0 || value <= threshold): 
             return {
               fillColor: 'white',
               fillOpacity: 0.6
             }
           // 1
-          case (value <= threshold): 
+          case (value > threshold && value <= (threshold * 2)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity / 100
             }
           // 2
-          case (value > threshold && value <= threshold * 2): 
+          case (value > (threshold * 2) && value <= (threshold * 3)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 2 / 100
             }
           // 3
-          case (value > threshold * 2 && value <= threshold * 3): 
+          case (value > (threshold * 3) && value <= (threshold * 4)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 3 / 100
             }
           // 4
-          case (value > threshold * 3 && value <= threshold * 4): 
+          case (value > (threshold * 4) && value <= (threshold * 5)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 4 / 100
             }
           // 5
-          case (value > threshold * 4 && value <= threshold * 5): 
+          case (value > (threshold * 5) && value <= (threshold * 6)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 5 / 100
             }
           // 6
-          case (value > threshold * 5 && value <= threshold * 6): 
+          case (value > (threshold * 6) && value <= 100): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 6 / 100
             }
-          // 7 
+          // case: value is null
           default: 
             return {
-              fillColor: 'black',
-              fillOpacity: thresholdOpacity * 7 / 100
+              fillColor: 'white',
+              fillOpacity: 0.6
             }
         }
       }
@@ -206,8 +207,17 @@ export default class Map extends Component {
       markers: markers
     }
 
+    const legendProps = {
+      grades: [0, 10, 20, 50, 100],
+      labels: ['wenig', 'mehr', 'mittel', 'viel', 'viel mehr'],
+      colors: ['green', 'red', 'blue', 'black', 'yellow'],
+      position: 'bottomleft',
+      title: 'Einfache Wohnlage in %'
+    }
+
     return (<div class={props.class}>
       {/* <Search class={_.addressSearch} {...searchProps} /> */}
+      {/* <LegendControl class={_.legend} {...legendProps} /> */}
       <LeafletMap className={_.map} {...mapProps} ref={(map) => { this.map = map.leafletElement }}>
         <BingLayer type='CanvasGray' bingkey={BING_KEY} culture='de-de' style='trs|lv:false;fc:EAEAEA_pp|lv:false;v:false_ar|v:false;lv:false_vg|v:true;fc:E4E4E4_wt|fc:AED1E4_rd|sc:d0d0d0;fc:e9e9e9_mr|sc:d3d3d3;fc:dddddd_hg|sc:d3d3d3;fc:e9e9e9_g|lc:EAEAEA' />
         <GeoJSON data={berlinMask} {...maskProps} />
