@@ -17,8 +17,12 @@ export default class LegendControl extends Component {
       position,
       title,
       unit,
+      selectedMarker,
       ...rest
     } = this.props
+
+    const mapIsLoaded = selectedMarker !== null
+    if (!mapIsLoaded) return
 
     return <div {...this.props}>
       <div class={className}>
