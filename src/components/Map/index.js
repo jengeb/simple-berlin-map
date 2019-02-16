@@ -133,43 +133,43 @@ export default class Map extends Component {
         const threshold = 100 / 7
         const thresholdOpacity = 100 / 8
         switch (true) {
-          // 0
+          // 1
           case (value === 0 || value <= threshold): 
             return {
               fillColor: 'white',
               fillOpacity: 0.6
             }
-          // 1
+          // 2
           case (value > threshold && value <= (threshold * 2)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity / 100
             }
-          // 2
+          // 3
           case (value > (threshold * 2) && value <= (threshold * 3)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 2 / 100
             }
-          // 3
+          // 4
           case (value > (threshold * 3) && value <= (threshold * 4)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 3 / 100
             }
-          // 4
+          // 5
           case (value > (threshold * 4) && value <= (threshold * 5)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 4 / 100
             }
-          // 5
+          // 6
           case (value > (threshold * 5) && value <= (threshold * 6)): 
             return {
               fillColor: 'black',
               fillOpacity: thresholdOpacity * 5 / 100
             }
-          // 6
+          // 7
           case (value > (threshold * 6) && value <= 100): 
             return {
               fillColor: 'black',
@@ -213,7 +213,8 @@ export default class Map extends Component {
       colors: ['rgba(255, 255, 255, 0.6)', 'rgba(0, 0, 0, 0.15)', 'rgba(0, 0, 0, 0.30)', 'rgba(0, 0, 0, 0.45)', 'rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.75)', 'rgba(0, 0, 0, 1)'],
       position: 'bottomleft',
       title: 'Einfache Wohnlage',
-      unit: 'in %'
+      unit: 'in %',
+      selectedMarker
     }
 
     return (<div class={props.class}>
