@@ -210,7 +210,7 @@ export default class Map extends Component {
     const legendProps = {
       grades: [0, 14, 28, 42, 57, 71, 85, 100],
       labels: [],
-      colors: ['rgba(255, 255, 255, 0.6)', 'rgba(0, 0, 0, 0.15)', 'rgba(0, 0, 0, 0.30)', 'rgba(0, 0, 0, 0.45)', 'rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.75)', 'rgba(0, 0, 0, 1)'],
+      colors: ['rgba(0, 0, 0, 0.03)', 'rgba(0, 0, 0, 0.14)', 'rgba(0, 0, 0, 0.28)', 'rgba(0, 0, 0, 0.39)', 'rgba(0, 0, 0, 0.50)', 'rgba(0, 0, 0, 0.63)', 'rgba(0, 0, 0, 0.78)'],
       position: 'bottomleft',
       title: 'Einfache Wohnlage',
       unit: 'in %',
