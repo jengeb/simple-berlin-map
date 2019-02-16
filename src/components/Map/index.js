@@ -179,7 +179,7 @@ export default class Map extends Component {
           default: 
             return {
               fillColor: 'white',
-              fillOpacity: 0.6
+              fillOpacity: 0.85
             }
         }
       }
